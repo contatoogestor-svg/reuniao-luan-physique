@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reunião Estratégica — Luan Silva Physique</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --bg3: #161616;
+    --card: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --accent: #f5a623;
+    --accent2: #ff6b35;
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.5);
+    --muted2: rgba(255,255,255,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted2);
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .nav-dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
+
+  /* ── SECTIONS ── */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 48px 60px;
+    position: relative;
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .label::before {
+    content: '';
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--accent);
+  }
+
+  h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 900; line-height: 1.05; letter-spacing: -1px; }
+  h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; }
+  h3 { font-size: 20px; font-weight: 700; }
+
+  .accent { color: var(--accent); }
+  .muted { color: var(--muted); }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+    filter: grayscale(20%);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(8,8,8,0.8) 0%, rgba(8,8,8,0.4) 50%, rgba(8,8,8,0.85) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    max-width: 800px;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+  .hero-tag span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .hero-title { font-size: clamp(48px, 7vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -2px; margin-bottom: 24px; }
+  .hero-sub { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 500px; margin-bottom: 48px; }
+  .hero-names {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .hero-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .hero-name-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .hero-divider { width: 1px; height: 20px; background: var(--border); }
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 64px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    z-index: 2;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+  .scroll-hint svg { width: 16px; }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .max-w { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color .3s;
+  }
+  .card:hover { border-color: rgba(245,166,35,0.2); }
+  .card-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(245,166,35,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header { margin-bottom: 48px; }
+  .section-header p { margin-top: 12px; color: var(--muted); font-size: 16px; max-width: 600px; line-height: 1.6; }
+
+  /* ── PRODUTO ── */
+  #produto { background: var(--bg); }
+  .produto-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+  }
+  .produto-alert-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .produto-alert h3 { font-size: 16px; margin-bottom: 6px; color: var(--accent); }
+  .produto-alert p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .checklist { display: flex; flex-direction: column; gap: 12px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .check-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(245,166,35,0.1);
+    border: 1.5px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── FLUXOS ── */
+  #fluxos { background: var(--bg2); }
+  .fluxo-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+  .fluxo-card:hover { transform: translateY(-4px); border-color: rgba(245,166,35,0.3); }
+  .fluxo-card.destaque { border-color: rgba(245,166,35,0.4); }
+  .fluxo-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--accent);
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .fluxo-num {
+    font-size: 40px; font-weight: 900; color: var(--accent);
+    opacity: 0.3; margin-bottom: 8px;
+    line-height: 1;
+  }
+  .fluxo-card h3 { font-size: 22px; margin-bottom: 8px; }
+  .fluxo-card .sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .fluxo-stats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .fluxo-stat {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .fluxo-stat:last-child { border-bottom: none; }
+  .fluxo-stat .key { color: var(--muted); }
+  .fluxo-stat .val { font-weight: 600; }
+  .val-green { color: #4ade80; }
+  .val-yellow { color: var(--accent); }
+  .val-red { color: #f87171; }
+  .fluxo-price {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .fluxo-price .amount { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .fluxo-price .period { font-size: 13px; color: var(--muted); }
+  .fluxo-alert {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .fluxo-alert a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(245,166,35,0.3);
+  }
+  .fluxo-alert a:hover { border-color: var(--accent); }
+
+  /* ── INVESTIMENTO ── */
+  #investimento { background: var(--bg); }
+  .invest-big {
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .invest-big .pre { font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .invest-big .valor { font-size: clamp(56px, 8vw, 96px); font-weight: 900; letter-spacing: -3px; color: var(--accent); line-height: 1; }
+  .invest-big .desc { margin-top: 12px; font-size: 16px; color: var(--muted); }
+  .invest-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .invest-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .invest-item .titulo { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .invest-item .num { font-size: 28px; font-weight: 800; color: var(--text); }
+  .invest-item .sub2 { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .invest-timeline {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .invest-timeline h3 { margin-bottom: 24px; font-size: 16px; }
+  .timeline { display: flex; gap: 0; }
+  .timeline-item {
+    flex: 1;
+    padding: 0 16px 0 0;
+    position: relative;
+  }
+  .timeline-item::after {
+    content: '→';
+    position: absolute;
+    right: -4px; top: 6px;
+    color: var(--muted2);
+    font-size: 14px;
+  }
+  .timeline-item:last-child::after { display: none; }
+  .t-month { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .t-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── CHECKLIST PRÉ-LANÇAMENTO ── */
+  #checklist-section { background: var(--bg2); }
+  .check-group { margin-bottom: 32px; }
+  .check-group-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .check-list { display: flex; flex-direction: column; gap: 10px; }
+  .check-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all .2s;
+    user-select: none;
+  }
+  .check-row:hover { border-color: rgba(245,166,35,0.2); }
+  .check-row.done { opacity: 0.5; }
+  .check-row.done .check-box { background: var(--accent); border-color: var(--accent); }
+  .check-row.done .check-box::after { content: '✓'; }
+  .check-box {
+    width: 20px; height: 20px; border-radius: 5px;
+    border: 1.5px solid var(--muted2);
+    flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #000;
+    transition: all .2s;
+  }
+  .check-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── FOTOS ── */
+  #fotos { background: var(--bg); overflow: hidden; }
+  .fotos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .foto-card {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+  .foto-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform .5s;
+    display: block;
+  }
+  .foto-card:hover img { transform: scale(1.04); }
+  .foto-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 24px 24px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  }
+  .foto-overlay .nome { font-size: 18px; font-weight: 800; }
+  .foto-overlay .role { font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ── PRÓXIMOS PASSOS ── */
+  #proximos { background: var(--bg2); }
+  .passos { display: flex; flex-direction: column; gap: 16px; }
+  .passo {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 24px 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color .2s;
+  }
+  .passo:hover { border-color: rgba(245,166,35,0.2); }
+  .passo-num {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(245,166,35,0.1);
+    border: 1.5px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .passo-body h3 { font-size: 15px; margin-bottom: 4px; }
+  .passo-body p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+  }
+  .footer-logo { font-size: 20px; font-weight: 900; }
+  .footer-logo span { color: var(--accent); }
+  .footer-info { text-align: right; font-size: 12px; color: var(--muted); line-height: 1.8; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    section { padding: 80px 24px 48px; }
+    nav { padding: 16px 24px; }
+    .hero-content { padding: 0 24px; }
+    .scroll-hint { left: 24px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .invest-breakdown { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-info { text-align: center; }
+    .fotos-grid { grid-template-columns: 1fr; }
+    .timeline { flex-direction: column; gap: 16px; }
+    .timeline-item::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 501 90" style="height:28px;width:auto;display:block;"><g fill="white" transform="matrix(5.703421805055199,0,0,5.703421805055199,111.14067229352395,-3.0228150624331036)"><path d="M8.32 13.55L7.55 11.65L3.40 11.65L2.63 13.55L-0.20 13.55L4.13 3.75L6.86 3.75L11.20 13.55L8.32 13.55ZM4.21 9.60L6.73 9.60L5.47 6.47L4.21 9.60ZM17.19 3.16L19.85 3.16L19.85 13.55L17.32 13.55L17.32 12.80Q16.58 13.68 15.09 13.68L15.09 13.68Q14.06 13.68 13.20 13.20Q12.35 12.71 11.85 11.82Q11.35 10.92 11.35 9.74L11.35 9.74Q11.35 8.57 11.85 7.68Q12.35 6.79 13.20 6.31Q14.06 5.84 15.09 5.84L15.09 5.84Q16.45 5.84 17.19 6.62L17.19 6.62L17.19 3.16ZM15.65 11.56Q16.34 11.56 16.79 11.08Q17.23 10.60 17.23 9.74L17.23 9.74Q17.23 8.90 16.79 8.43Q16.35 7.95 15.65 7.95L15.65 7.95Q14.95 7.95 14.50 8.43Q14.06 8.90 14.06 9.74L14.06 9.74Q14.06 10.60 14.50 11.08Q14.95 11.56 15.65 11.56L15.65 11.56ZM24.32 13.68Q23.37 13.68 22.44 13.46Q21.52 13.24 20.96 12.89L20.96 12.89L21.76 11.07Q22.27 11.40 22.99 11.58Q23.70 11.77 24.40 11.77L24.40 11.77Q25.05 11.77 25.32 11.64Q25.59 11.51 25.59 11.26L25.59 11.26Q25.59 11.00 25.26 10.90Q24.93 10.79 24.22 10.70L24.22 10.70Q23.31 10.58 22.67 10.40Q22.04 10.22 21.57 9.73Q21.11 9.24 21.11 8.36L21.11 8.36Q21.11 7.63 21.55 7.06Q21.98 6.50 22.81 6.17Q23.65 5.84 24.81 5.84L24.81 5.84Q25.63 5.84 26.45 6.01Q27.26 6.17 27.80 6.48L27.80 6.48L27.01 8.29Q26.00 7.73 24.82 7.73L24.82 7.73Q24.19 7.73 23.90 7.87Q23.60 8.02 23.60 8.26L23.60 8.26Q23.60 8.53 23.93 8.63Q24.25 8.74 24.99 8.85L24.99 8.85Q25.93 8.99 26.54 9.17Q27.16 9.35 27.61 9.83Q28.07 10.32 28.07 11.19L28.07 11.19Q28.07 11.90 27.64 12.47Q27.20 13.03 26.36 13.36Q25.51 13.68 24.32 13.68L24.32 13.68ZM41.10 5.89L36.19 5.89L36.19 8.05L40.52 8.05L40.52 10.19L36.19 10.19L36.19 13.55L33.42 13.55L33.42 3.75L41.10 3.75L41.10 5.89ZM42.28 13.55L42.28 3.16L44.94 3.16L44.94 13.55L42.28 13.55ZM50.47 13.68Q49.25 13.68 48.27 13.17Q47.29 12.67 46.74 11.77Q46.19 10.88 46.19 9.74L46.19 9.74Q46.19 8.62 46.74 7.73Q47.29 6.83 48.27 6.33Q49.24 5.84 50.47 5.84L50.47 5.84Q51.70 5.84 52.68 6.33Q53.66 6.83 54.21 7.72Q54.75 8.61 54.75 9.74L54.75 9.74Q54.75 10.88 54.21 11.77Q53.66 12.67 52.68 13.17Q51.70 13.68 50.47 13.68L50.47 13.68ZM50.47 11.56Q51.17 11.56 51.62 11.08Q52.07 10.60 52.07 9.74L52.07 9.74Q52.07 8.90 51.62 8.43Q51.17 7.95 50.47 7.95L50.47 7.95Q49.77 7.95 49.32 8.43Q48.87 8.90 48.87 9.74L48.87 9.74Q48.87 10.60 49.32 11.08Q49.77 11.56 50.47 11.56L50.47 11.56ZM66.01 5.96L68.35 5.96L65.65 13.55L63.07 13.55L61.64 9.42L60.16 13.55L57.58 13.55L54.88 5.96L57.40 5.96L58.95 10.56L60.56 5.96L62.83 5.96L64.40 10.60L66.01 5.96Z"></path></g><g transform="matrix(2.8125,0,0,2.8125,0,0)" stroke="none" fill="white"><path d="M0 32h32V0H0v32zM2 2h2.981L16.01 21.103 27.04 2H30v28H2V2z"></path></g></svg>
+  </div>
+  <div class="nav-dots" id="navDots">
+    <div class="nav-dot active" onclick="goTo('hero')"></div>
+    <div class="nav-dot" onclick="goTo('produto')"></div>
+    <div class="nav-dot" onclick="goTo('fluxos')"></div>
+    <div class="nav-dot" onclick="goTo('investimento')"></div>
+    <div class="nav-dot" onclick="goTo('checklist-section')"></div>
+    <div class="nav-dot" onclick="goTo('proximos')"></div>
+  </div>
+</nav>
+
+<!-- 01 HERO -->
+<section id="hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="/Users/NATHAN/Downloads/AQMoD9MGncVKT5i20RTbGFJRAWMVjQ3Jtypj34HDNZSf1oulXzHEWVb2ZlJpifaSphbKeVjBAX7za9rXmD5wGjVNooXJWHg8XzsFHAg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span></span> Reunião Estratégica — 2026</div>
+    <h1 class="hero-title">Do palco<br>para o <span class="accent">digital.</span></h1>
+    <p class="hero-sub">Estruturando a consultoria fitness para crescer com tráfego pago no Meta Ads.</p>
+    <div class="hero-names">
+      <div class="hero-name"><div class="hero-name-dot"></div> Luan Silva</div>
+      <div class="hero-divider"></div>
+      <div class="hero-name"><div class="hero-name-dot"></div> Matheus</div>
+      <div class="hero-divider"></div>
+      <div class="hero-name" style="color: var(--accent)"><div class="hero-name-dot"></div> Ads Flow — Natan</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10l5 5 5-5"/></svg>
+    Scroll para navegar
+  </div>
+</section>
+
+<!-- 02 PRODUTO -->
+<section id="produto">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="label">01 — Fundação</div>
+      <h2>Antes de anunciar,<br>o <span class="accent">produto tem que estar pronto.</span></h2>
+      <p>Tráfego pago amplifica o que já existe. Se o produto não estiver bem estruturado, o anúncio queima dinheiro sem converter.</p>
+    </div>
+
+    <div class="produto-alert">
+      <div class="produto-alert-icon">⚡</div>
+      <div>
+        <h3>Regra de ouro do tráfego pago</h3>
+        <p>O anúncio leva pessoas até a oferta. Quem converte é o produto. Antes de investir qualquer real em mídia, garanta que sua consultoria já tem uma versão mínima pronta para ser vendida.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3 style="margin-bottom:16px">Estrutura da oferta</h3>
+        <div class="checklist">
+          <div class="check-item"><div class="check-icon">→</div> Nome da consultoria definido</div>
+          <div class="check-item"><div class="check-icon">→</div> O que está incluso (treino, dieta, acompanhamento?)</div>
+          <div class="check-item"><div class="check-icon">→</div> Preço e modelo (mensal, trimestral, pacote fechado?)</div>
+          <div class="check-item"><div class="check-icon">→</div> Duração do acompanhamento</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <h3 style="margin-bottom:16px">Processo de venda</h3>
+        <div class="checklist">
+          <div class="check-item"><div class="check-icon">→</div> Como o cliente contrata? (WhatsApp, link, formulário?)</div>
+          <div class="check-item"><div class="check-icon">→</div> Link de pagamento configurado</div>
+          <div class="check-item"><div class="check-icon">→</div> O que acontece após o pagamento?</div>
+          <div class="check-item"><div class="check-icon">→</div> Quem atende: Luan, Matheus ou ambos?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 FLUXOS -->
+<section id="fluxos">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="label">02 — Estratégia</div>
+      <h2>Dois caminhos.<br><span class="accent">Escolha o seu fluxo.</span></h2>
+      <p>Ambos funcionam. A escolha depende do tempo disponível para atendimento e do nível de qualificação que você quer dos leads.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- FLUXO 1 -->
+      <div class="fluxo-card">
+        <div class="fluxo-num">01</div>
+        <h3>WhatsApp Direto</h3>
+        <p class="sub">Anúncio → Mensagem no WhatsApp</p>
+        <div class="fluxo-stats">
+          <div class="fluxo-stat"><span class="key">Volume de leads</span><span class="val val-green">Alto</span></div>
+          <div class="fluxo-stat"><span class="key">Qualidade do lead</span><span class="val val-yellow">Médio</span></div>
+          <div class="fluxo-stat"><span class="key">Exigência operacional</span><span class="val val-red">Alta</span></div>
+          <div class="fluxo-stat"><span class="key">Resposta necessária</span><span class="val">Em até 24h</span></div>
+        </div>
+        <div class="fluxo-price">
+          <span class="amount">R$ 600</span>
+          <span class="period">/mês (gestão)</span>
+        </div>
+        <div class="fluxo-alert">
+          ⚠️ Receberá muitas mensagens. É essencial responder rápido — lead frio em 24h dificilmente converte.<br><br>
+          💬 Script de atendimento recomendado: <a href="https://contatoogestor-svg.github.io/gerador-scripts-atendimento/" target="_blank">Gerador de Scripts →</a>
+        </div>
+      </div>
+
+      <!-- FLUXO 2 -->
+      <div class="fluxo-card destaque">
+        <div class="fluxo-badge">Recomendado</div>
+        <div class="fluxo-num">02</div>
+        <h3>Landing Page</h3>
+        <p class="sub">Anúncio → LP com todas as informações → Lead qualificado</p>
+        <div class="fluxo-stats">
+          <div class="fluxo-stat"><span class="key">Volume de leads</span><span class="val val-yellow">Médio</span></div>
+          <div class="fluxo-stat"><span class="key">Qualidade do lead</span><span class="val val-green">Alta</span></div>
+          <div class="fluxo-stat"><span class="key">Exigência operacional</span><span class="val val-green">Baixa</span></div>
+          <div class="fluxo-stat"><span class="key">Filtra interesse</span><span class="val">Antes do contato</span></div>
+        </div>
+        <div class="fluxo-price">
+          <span class="amount">R$ 950</span>
+          <span class="period">LP (único) + R$ 600/mês</span>
+        </div>
+        <div class="fluxo-alert">
+          ✅ O lead já chega sabendo o que é a consultoria, o preço e o diferencial. A conversa no WhatsApp começa muito mais avançada.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 INVESTIMENTO -->
+<section id="investimento">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="label">03 — Investimento</div>
+      <h2>Números <span class="accent">claros</span><br>e expectativas reais.</h2>
+    </div>
+
+    <div class="invest-big">
+      <div class="pre">Investimento mínimo em anúncio</div>
+      <div class="valor">R$ 600</div>
+      <div class="desc">por mês · R$ 20 por dia · quanto maior, mais rápido o algoritmo aprende</div>
+    </div>
+
+    <div class="invest-breakdown">
+      <div class="invest-item">
+        <div class="titulo">Anúncio (Meta Ads)</div>
+        <div class="num">R$ 600<span style="font-size:16px;color:var(--muted)">/mês</span></div>
+        <div class="sub2">Investimento mínimo</div>
+      </div>
+      <div class="invest-item">
+        <div class="titulo">Gestão de Tráfego</div>
+        <div class="num">R$ 600<span style="font-size:16px;color:var(--muted)">/mês</span></div>
+        <div class="sub2">Ads Flow — Natan</div>
+      </div>
+      <div class="invest-item" style="border-color: rgba(245,166,35,0.3);">
+        <div class="titulo">Total mensal</div>
+        <div class="num" style="color:var(--accent)">R$ 1.200<span style="font-size:16px;color:var(--muted)">/mês</span></div>
+        <div class="sub2">+ R$ 950 se optar por LP</div>
+      </div>
+    </div>
+
+    <div class="invest-timeline">
+      <h3>⏱ O que esperar nos primeiros meses</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="t-month">Mês 1</div>
+          <div class="t-desc">Fase de aprendizado. Algoritmo coleta dados, criativos são testados. Resultados abaixo do potencial — é normal.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="t-month">Mês 2</div>
+          <div class="t-desc">Otimizações com base em dados reais. Custo por lead começa a cair. Padrões de conversão se formam.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="t-month">Mês 3+</div>
+          <div class="t-desc">Campanhas maduras. Escalonamento inteligente. Resultados consistentes e previsíveis.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px; padding: 20px 24px; background: rgba(245,166,35,0.05); border: 1px solid rgba(245,166,35,0.15); border-radius: 12px; font-size: 13px; color: var(--muted); line-height: 1.6;">
+      💡 <strong style="color:var(--text)">Recomendação:</strong> O ideal é manter no mínimo <strong style="color:var(--accent)">3 meses</strong> de campanha para ter uma análise real de resultado. Tráfego pago não é imediato — é uma construção com dados.
+    </div>
+  </div>
+</section>
+
+<!-- 05 CHECKLIST PRÉ-LANÇAMENTO -->
+<section id="checklist-section">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="label">04 — Checklist</div>
+      <h2>Tudo que precisa<br>estar <span class="accent">pronto para lançar.</span></h2>
+      <p>Clique para marcar cada item conforme avançam na conversa.</p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <!-- CRIATIVOS -->
+        <div class="check-group">
+          <div class="check-group-title">🎨 Criativos & Prova Social</div>
+          <div class="check-list">
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Têm fotos/vídeos de qualidade para usar nos anúncios
+                <div class="check-sub">Mínimo 2 criativos para validar no início</div>
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Possuem resultados de alunos (antes/depois, depoimentos)
+                <div class="check-sub">Prova social é o maior gatilho de conversão para personal trainer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INSTAGRAM -->
+        <div class="check-group">
+          <div class="check-group-title">📱 Perfil do Instagram</div>
+          <div class="check-list">
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Bio clara sobre o serviço oferecido
+                <div class="check-sub">O anúncio roda vinculado ao @luansilvaphysique</div>
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Destaques organizados (resultados, metodologia, depoimentos)
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Feed transmite autoridade e identidade visual
+                <div class="check-sub">O perfil complementa o anúncio — leads verificam antes de contatar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- PÚBLICO -->
+        <div class="check-group">
+          <div class="check-group-title">🎯 Público-Alvo</div>
+          <div class="check-list">
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Perfil do cliente ideal definido (faixa etária, gênero)
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Abrangência geográfica definida
+                <div class="check-sub">Local, regional ou atendimento nacional/online?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA -->
+        <div class="check-group">
+          <div class="check-group-title">📋 Lista de Contatos</div>
+          <div class="check-list">
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Possuem lista de ex-alunos com telefone ou e-mail
+                <div class="check-sub">✅ Se sim → Público Personalizado + Lookalike = campanhas já começam inteligentes<br>⚪ Se não → Segmentação por interesse (funciona, mas demora mais)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACESSO -->
+        <div class="check-group">
+          <div class="check-group-title">🔑 Acesso & Técnico</div>
+          <div class="check-list">
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Meta Business Manager criado e configurado
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Acesso ao BM concedido para Ads Flow
+              </div>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box"></div>
+              <div>
+                Pixel do Meta instalado na LP
+                <div class="check-sub">Obrigatório se optar pelo Fluxo 2 (Landing Page)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 FOTOS -->
+<section id="fotos" style="min-height: auto; padding: 80px 48px;">
+  <div class="max-w">
+    <div class="label">Luan Silva Physique</div>
+    <h2>Resultados que<br><span class="accent">vendem por si só.</span></h2>
+    <div class="fotos-grid">
+      <div class="foto-card">
+        <img src="/Users/NATHAN/Downloads/464987659_18286660630232276_4505804971724004060_n.jpg" alt="Luan Silva — Competição">
+        <div class="foto-overlay">
+          <div class="role">Campeão</div>
+          <div class="nome">Luan Silva</div>
+        </div>
+      </div>
+      <div class="foto-card">
+        <img src="/Users/NATHAN/Downloads/504181270_18312915064232276_5653914006874533389_n.jpg" alt="Luan Silva — Muscle Contest Nacional">
+        <div class="foto-overlay">
+          <div class="role">Muscle Contest Nacional</div>
+          <div class="nome">Luan Silva</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PRÓXIMOS PASSOS -->
+<section id="proximos">
+  <div class="max-w">
+    <div class="section-header">
+      <div class="label">05 — Próximos Passos</div>
+      <h2>O que acontece<br><span class="accent">a partir de hoje.</span></h2>
+    </div>
+
+    <div class="passos">
+      <div class="passo">
+        <div class="passo-num">1</div>
+        <div class="passo-body">
+          <h3>Definir o produto e o fluxo (hoje)</h3>
+          <p>Sair desta reunião com o produto estruturado e a escolha do fluxo (WhatsApp ou LP) confirmada.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">2</div>
+        <div class="passo-body">
+          <h3>Criar / acessar o Meta Business Manager</h3>
+          <p>Conceder acesso ao Ads Flow para configurar a conta de anúncios, o Pixel e as campanhas.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">3</div>
+        <div class="passo-body">
+          <h3>Produção dos criativos</h3>
+          <p>Selecionar pelo menos 2 fotos/vídeos para os primeiros anúncios. Depoimentos e resultados têm prioridade.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">4</div>
+        <div class="passo-body">
+          <h3>Desenvolvimento da Landing Page (se Fluxo 2)</h3>
+          <p>Criação da LP com informações da consultoria, instalação do Pixel e integração com WhatsApp.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">5</div>
+        <div class="passo-body">
+          <h3>Lançamento das campanhas</h3>
+          <p>Configuração das campanhas, segmentação de público e publicação. Monitoramento diário na primeira semana.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div class="passo-num">6</div>
+        <div class="passo-body">
+          <h3>Relatório e otimização mensal</h3>
+          <p>Report completo todo mês com métricas, aprendizados e plano de otimização para o mês seguinte.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 501 90" style="height:36px;width:auto;display:block;"><g fill="white" transform="matrix(5.703421805055199,0,0,5.703421805055199,111.14067229352395,-3.0228150624331036)"><path d="M8.32 13.55L7.55 11.65L3.40 11.65L2.63 13.55L-0.20 13.55L4.13 3.75L6.86 3.75L11.20 13.55L8.32 13.55ZM4.21 9.60L6.73 9.60L5.47 6.47L4.21 9.60ZM17.19 3.16L19.85 3.16L19.85 13.55L17.32 13.55L17.32 12.80Q16.58 13.68 15.09 13.68L15.09 13.68Q14.06 13.68 13.20 13.20Q12.35 12.71 11.85 11.82Q11.35 10.92 11.35 9.74L11.35 9.74Q11.35 8.57 11.85 7.68Q12.35 6.79 13.20 6.31Q14.06 5.84 15.09 5.84L15.09 5.84Q16.45 5.84 17.19 6.62L17.19 6.62L17.19 3.16ZM15.65 11.56Q16.34 11.56 16.79 11.08Q17.23 10.60 17.23 9.74L17.23 9.74Q17.23 8.90 16.79 8.43Q16.35 7.95 15.65 7.95L15.65 7.95Q14.95 7.95 14.50 8.43Q14.06 8.90 14.06 9.74L14.06 9.74Q14.06 10.60 14.50 11.08Q14.95 11.56 15.65 11.56L15.65 11.56ZM24.32 13.68Q23.37 13.68 22.44 13.46Q21.52 13.24 20.96 12.89L20.96 12.89L21.76 11.07Q22.27 11.40 22.99 11.58Q23.70 11.77 24.40 11.77L24.40 11.77Q25.05 11.77 25.32 11.64Q25.59 11.51 25.59 11.26L25.59 11.26Q25.59 11.00 25.26 10.90Q24.93 10.79 24.22 10.70L24.22 10.70Q23.31 10.58 22.67 10.40Q22.04 10.22 21.57 9.73Q21.11 9.24 21.11 8.36L21.11 8.36Q21.11 7.63 21.55 7.06Q21.98 6.50 22.81 6.17Q23.65 5.84 24.81 5.84L24.81 5.84Q25.63 5.84 26.45 6.01Q27.26 6.17 27.80 6.48L27.80 6.48L27.01 8.29Q26.00 7.73 24.82 7.73L24.82 7.73Q24.19 7.73 23.90 7.87Q23.60 8.02 23.60 8.26L23.60 8.26Q23.60 8.53 23.93 8.63Q24.25 8.74 24.99 8.85L24.99 8.85Q25.93 8.99 26.54 9.17Q27.16 9.35 27.61 9.83Q28.07 10.32 28.07 11.19L28.07 11.19Q28.07 11.90 27.64 12.47Q27.20 13.03 26.36 13.36Q25.51 13.68 24.32 13.68L24.32 13.68ZM41.10 5.89L36.19 5.89L36.19 8.05L40.52 8.05L40.52 10.19L36.19 10.19L36.19 13.55L33.42 13.55L33.42 3.75L41.10 3.75L41.10 5.89ZM42.28 13.55L42.28 3.16L44.94 3.16L44.94 13.55L42.28 13.55ZM50.47 13.68Q49.25 13.68 48.27 13.17Q47.29 12.67 46.74 11.77Q46.19 10.88 46.19 9.74L46.19 9.74Q46.19 8.62 46.74 7.73Q47.29 6.83 48.27 6.33Q49.24 5.84 50.47 5.84L50.47 5.84Q51.70 5.84 52.68 6.33Q53.66 6.83 54.21 7.72Q54.75 8.61 54.75 9.74L54.75 9.74Q54.75 10.88 54.21 11.77Q53.66 12.67 52.68 13.17Q51.70 13.68 50.47 13.68L50.47 13.68ZM50.47 11.56Q51.17 11.56 51.62 11.08Q52.07 10.60 52.07 9.74L52.07 9.74Q52.07 8.90 51.62 8.43Q51.17 7.95 50.47 7.95L50.47 7.95Q49.77 7.95 49.32 8.43Q48.87 8.90 48.87 9.74L48.87 9.74Q48.87 10.60 49.32 11.08Q49.77 11.56 50.47 11.56L50.47 11.56ZM66.01 5.96L68.35 5.96L65.65 13.55L63.07 13.55L61.64 9.42L60.16 13.55L57.58 13.55L54.88 5.96L57.40 5.96L58.95 10.56L60.56 5.96L62.83 5.96L64.40 10.60L66.01 5.96Z"></path></g><g transform="matrix(2.8125,0,0,2.8125,0,0)" stroke="none" fill="white"><path d="M0 32h32V0H0v32zM2 2h2.981L16.01 21.103 27.04 2H30v28H2V2z"></path></g></svg>
+    <div style="margin-top:8px; font-size:12px; color:var(--muted)">Tráfego Pago que Converte</div>
+  </div>
+  <div class="footer-info">
+    Reunião Estratégica — Luan Silva Physique<br>
+    Março 2026
+  </div>
+</footer>
+
+<script>
+  // Navegação por dots
+  const sections = ['hero','produto','fluxos','investimento','checklist-section','proximos'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  function goTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Atualiza dot ativo no scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sections.indexOf(entry.target.id);
+        if (idx !== -1) {
+          dots.forEach(d => d.classList.remove('active'));
+          dots[idx]?.classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Navegação por teclado
+  let currentSection = 0;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      currentSection = Math.min(currentSection + 1, sections.length - 1);
+      goTo(sections[currentSection]);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      currentSection = Math.max(currentSection - 1, 0);
+      goTo(sections[currentSection]);
+    }
+  });
+
+  // Checklist interativo
+  function toggleCheck(row) {
+    row.classList.toggle('done');
+  }
+</script>
+</body>
+</html>
